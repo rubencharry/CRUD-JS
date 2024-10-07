@@ -34,7 +34,7 @@ export const renderTable = (element) => {
     element.append(table);
 }
 
-    let tableHTML
+    let tableHTML = ''
     user.forEach( user => {
         tableHTML += `
         <tr>
@@ -51,6 +51,7 @@ export const renderTable = (element) => {
     </tr>
         `
     });
+
 
     table.querySelector('tbody').innerHTML = tableHTML;
 
