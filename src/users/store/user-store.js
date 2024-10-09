@@ -23,7 +23,22 @@ const loadPreviousPage = async () => {
   state.users = users;
 };
 
-const onUserChanged = () => {};
+/**
+ * 
+ * @param {User} user 
+ */
+const onUserChanged = (updatedUser) => {
+  state.users = state.users.map (user => {
+    if( user.id === updatedUser.id) {
+      return updatedUser;
+    }
+    return user;
+  });
+
+  if(state.users.length < 10) {
+    state.users.push(updatedUser)
+  }
+};
 
 const reloadPage = async () => {};
 

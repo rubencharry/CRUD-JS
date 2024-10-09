@@ -1,5 +1,6 @@
 import "./render-table.css";
 import userStore from "../../store/user-store";
+import { showModal } from "../render-modal/render-modal";
 
 let table;
 
@@ -17,14 +18,26 @@ const createTable = () => {
     </tr>
 
     `;
-    const tableBody = document.createElement('tbody');
-    table.append(tableHeaders, tableBody);
-    return table;
+  const tableBody = document.createElement("tbody");
+  table.append(tableHeaders, tableBody);
+  return table;
 };
 
 /**
  * 
- * @param {HTMLDivElement} element 
+ * @param {MouseEvent} event 
+ */
+const tableSelectListener = (event) => {
+    const element = event.target.closest('.select-user');
+    if(!element) return;
+
+    const id = element.getAttribute('data-id');
+    showModal(id);
+}
+
+/**
+ *
+ * @param {HTMLDivElement} element
  */
 export const renderTable = (element) => {
   const user = userStore.getUsers();
@@ -32,27 +45,27 @@ export const renderTable = (element) => {
   if (!table) {
     table = createTable();
     element.append(table);
-}
 
-    let tableHTML = ''
-    user.forEach( user => {
-        tableHTML += `
+    table.addEventListener("click", tableSelectListener);
+  }
+
+  let tableHTML = "";
+  user.forEach((user) => {
+    tableHTML += `
         <tr>
-        <td>${ user.id }</td>
-        <td>${ user.balance }</td>
-        <td>${ user.firstName }</td>
-        <td>${ user.lastName }</td>
-        <td>${ user.isActive }</td>
+        <td>${user.id}</td>
+        <td>${user.balance}</td>
+        <td>${user.firstName}</td>
+        <td>${user.lastName}</td>
+        <td>${user.isActive}</td>
         <td>
-        <a href="#/" data-id="${ user.id }"> Select </a>
+        <a href="#/" class="select-user" data-id="${user.id}"> Select </a>
         |
-        <a href="#/" data-id="${ user.id }"> Delete </a>
+        <a href="#/" class="delete-user" data-id="${user.id}"> Delete </a>
         </td>
     </tr>
-        `
-    });
+        `;
+  });
 
-
-    table.querySelector('tbody').innerHTML = tableHTML;
-
+  table.querySelector("tbody").innerHTML = tableHTML;
 };
