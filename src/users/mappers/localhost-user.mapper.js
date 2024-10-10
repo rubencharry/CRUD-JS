@@ -6,7 +6,6 @@ import { User } from "../models/user"
  * @returns {User}
  */
 export const localhostUserToModel = ( localhostUser ) =>{
-
     const {
         avatar,
         balance,

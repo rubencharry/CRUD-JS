@@ -6,19 +6,14 @@ import { localhostUserToModel } from "../mappers/localhost-user.mapper";
  * @returns {Promise<User>}
  */
 
-export const loadUsersByPage = async (pid) => {
-  if(page <= 5){
+export const getUserById = async (id) => {
+
     const url = `${import.meta.env.VITE_BASE_URL}/users/${id}`;
     const res = await fetch(url);
-    const json = await res.json();
-  
+    const data = await res.json();
+
+    const user = localhostUserToModel(data);
     
-    const users = json.data.map((userLike) => {
-      return localhostUserToModel(userLike);
-    });
-    
-    console.log(users);
-    return users;
-  }
-  else return[];
+    return user;
+ 
 };

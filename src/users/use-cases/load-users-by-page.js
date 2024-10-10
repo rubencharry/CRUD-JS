@@ -13,10 +13,12 @@ export const loadUsersByPage = async (page = 1) => {
     const res = await fetch(url);
     const json = await res.json();
   
+    const user = localhostUserToModel(json.data);
     
-    const user = localhostUserToModel(data);
-    
-    console.log(user);
-    return user;
+    const users = json.data.map((userLike) => {
+        return localhostUserToModel(userLike);
+      });
+      
+      return users;
 
 };
